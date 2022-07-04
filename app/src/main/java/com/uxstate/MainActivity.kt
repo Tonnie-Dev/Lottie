@@ -12,10 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.airbnb.lottie.compose.*
 import com.uxstate.ui.theme.LottieTheme
 import kotlin.math.max
@@ -30,10 +29,52 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    // Greeting("Android")
+
+                    Lottie()
                 }
             }
         }
+    }
+}
+
+
+@Composable
+fun Lottie() {
+
+
+    Column(
+            modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        val urlx = "https://assets3.lottiefiles.com/private_files/lf30_ykdoon9j.json"
+        val uri = urlx.toUri()
+                .buildUpon()
+                .scheme("https")
+                .build()
+
+        //spec - holds reference to the object that we need to animate
+       //val spec = LottieCompositionSpec.RawRes(R.raw.loading_anim)
+
+ val spec = LottieCompositionSpec.Url(urlx)
+
+        //composition - render animation
+        val composition by rememberLottieComposition(spec = spec)
+
+        //state - manipulate the animation
+        val state = animateLottieCompositionAsState(
+                composition = composition,
+                iterations = LottieConstants.IterateForever,
+                speed = 1f,
+                clipSpec = LottieClipSpec.Progress(min = 0f, max = 1f)
+        )
+
+        //Lottie composable to display animation
+        LottieAnimation(composition = composition, progress = state.progress)
     }
 }
 
@@ -125,7 +166,7 @@ fun Greeting(name: String) {
                             speed = max(speed - 0.25f, 0f)
                         },
                         // Button background color
-                        colors = ButtonDefaults.buttonColors(containerColor =  Color(0xFF0F9D58))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0F9D58))
                 ) {
                     Text(
                             text = "-",
@@ -150,7 +191,7 @@ fun Greeting(name: String) {
                             speed += 0.25f
                         },
                         colors = ButtonDefaults.buttonColors(
-                                containerColor =  Color(0xFF0F9D58)
+                                containerColor = Color(0xFF0F9D58)
                         )
                 ) {
                     Text(
@@ -169,7 +210,7 @@ fun Greeting(name: String) {
                         isPlaying = !isPlaying
                     },
                     colors = ButtonDefaults.buttonColors(
-                            containerColor =  Color(0xFF0F9D58)
+                            containerColor = Color(0xFF0F9D58)
                     )
             ) {
                 Text(
@@ -181,4 +222,6 @@ fun Greeting(name: String) {
         }
     }
 }
+
+
 
