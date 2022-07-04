@@ -60,6 +60,15 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
+
+
+
+
     //Lottie Animation
-    implementation "com.airbnb.android:lottie-compose:1.0.0-beta07-1"
+    implementation "com.airbnb.android:lottie-compose:5.0.1"
+
+
+
+
+
 }
