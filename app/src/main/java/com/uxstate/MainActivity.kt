@@ -3,7 +3,10 @@ package com.uxstate
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -58,9 +61,9 @@ fun Lottie() {
                 .build()
 
         //spec - holds reference to the object that we need to animate
-       //val spec = LottieCompositionSpec.RawRes(R.raw.loading_anim)
+        //val spec = LottieCompositionSpec.RawRes(R.raw.loading_anim)
 
- val spec = LottieCompositionSpec.RawRes(R.raw.blue_animated_saturn)
+        val spec = LottieCompositionSpec.RawRes(R.raw.blue_animated_saturn)
 
         //composition - render animation
         val composition by rememberLottieComposition(spec = spec)
@@ -72,14 +75,19 @@ fun Lottie() {
                 speed = 1f,
                 clipSpec = LottieClipSpec.Progress(min = 0f, max = 1f)
         )
-
-        //Lottie composable to display animation
-        LottieAnimation(composition = composition, progress = state.progress)
-        
-        var sliderPosition by remember {
-            mutableStateOf(0f)
+        var isLike by remember {
+            mutableStateOf(false)
         }
-      
+        val progress by
+            animateFloatAsState(targetValue = if (isLike) 1f else 0f, animationSpec = tween(1000))
+        //Lottie composable to display animation
+        LottieAnimation(
+                modifier = Modifier.clickable {
+                    isLike = !isLike
+                },
+                composition = composition, progress = progress)
+
+
     }
 }
 
