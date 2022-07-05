@@ -60,7 +60,7 @@ fun Lottie() {
         //spec - holds reference to the object that we need to animate
        //val spec = LottieCompositionSpec.RawRes(R.raw.loading_anim)
 
- val spec = LottieCompositionSpec.Url(urlx)
+ val spec = LottieCompositionSpec.RawRes(R.raw.blue_animated_saturn)
 
         //composition - render animation
         val composition by rememberLottieComposition(spec = spec)
@@ -75,6 +75,11 @@ fun Lottie() {
 
         //Lottie composable to display animation
         LottieAnimation(composition = composition, progress = state.progress)
+        
+        var sliderPosition by remember {
+            mutableStateOf(0f)
+        }
+      
     }
 }
 
